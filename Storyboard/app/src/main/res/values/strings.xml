@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Storyboard</string>
+    <string name="nameString">Default Name</string>
+    <string name="bioView">Default Bio</string>
 </resources>

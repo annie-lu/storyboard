@@ -1,0 +1,5 @@
+
+*.properties
+*.lock
+StoryboardApp/gradle/wrapper/gradle-wrapper.jar
+StoryboardApp/gradlew
