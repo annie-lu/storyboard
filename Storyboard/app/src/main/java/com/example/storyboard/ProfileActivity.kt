@@ -61,7 +61,7 @@ class ProfileActivity : AppCompatActivity() {
         //nameTV?.isFocusable = false
         //nameTV?.isClickable = true
 
-
+        // TODO - MAKE IT SO ONLY YOU CAN EDIT OWN PROFILE, GET USERID FROM EXTRA
         editButton?.setOnClickListener {
             editing = !editing
 
