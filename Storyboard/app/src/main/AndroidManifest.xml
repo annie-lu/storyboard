@@ -23,8 +23,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ProfileActivity"
-            android:windowSoftInputMode="adjustResize" />
-
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

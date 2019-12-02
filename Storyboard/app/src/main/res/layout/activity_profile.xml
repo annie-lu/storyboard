@@ -11,24 +11,29 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:background="@android:color/transparent"
         android:fontFamily="casual"
+        android:maxLines="1"
         android:text="@string/nameString"
         android:textAlignment="center"
         android:textColor="#00BCD4"
         android:textSize="18sp"
         android:textStyle="bold"
         android:typeface="normal"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@android:color/transparent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/bio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@android:color/transparent"
+        android:inputType="text"
+        android:maxLines="2"
         android:text="@string/bioView"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +51,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bio"
         app:layout_constraintVertical_bias="0.518" />
+
+    <ImageButton
+        android:id="@+id/editButton"
+        android:layout_width="28dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="16dp"
+        android:background="?android:selectableItemBackground"
+        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
