@@ -41,14 +41,24 @@ class DashboardActivity : AppCompatActivity() {
 
 
         val challengeIntent = Intent(applicationContext, ChallengeActivity::class.java)
+        challengeIntent.putExtra(UserID,intent.getStringExtra(UserID))
         startActivity(challengeIntent)
     }
 
     fun loadWorksActivity(v: View) {
         Toast.makeText(this, "Loading Works", Toast.LENGTH_SHORT).show()
+        val currentUser = FirebaseAuth.getInstance().currentUser!!.uid
 
-        /*TODO add back in when works activity is added
-        val worksIntent= Intent(applicationContext, WorksActivity::class.java)
-        startActivity(worksIntent)*/
+        val worksIntent= Intent(applicationContext, WorksDashActivity::class.java)
+        worksIntent.putExtra("CURRUSER", currentUser)
+        worksIntent.putExtra("VIEWUSER", currentUser)
+        startActivity(worksIntent)
+    }
+
+
+    companion object {
+        val UserMail = "com.example.tesla.myhomelibrary.UMail"
+        val UserID = "com.example.tesla.myhomelibrary.UID"
+
     }
 }
