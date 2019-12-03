@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ConstraintLayout"
-    android:layout_width="match_parent"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
+
+
+
     <TextView
         android:id="@+id/name"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
@@ -21,51 +22,66 @@
         android:text="Challenges"
         android:textAlignment="center"
         android:textColor="#00BCD4"
-        android:textSize="18sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="normal"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:inputType="text" />
 
-    <TextView
-        android:id="@+id/bio"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <ScrollView android:layout_height="100dp"
         android:layout_marginTop="24dp"
-        android:background="@android:color/transparent"
-        android:inputType="text"
-        android:maxLines="2"
-        android:text="Submit your works and complete different challenges!"
+        android:layout_width="match_parent">
+    <TextView
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        android:id="@+id/bio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:inputType="textMultiLine"
+        android:text="Submit your work to complete this challenge! We add the challenge description here!"/>
+    </ScrollView>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:padding="5dp">
+
+    <TableRow>
 
     <Spinner
         android:id="@+id/spinnerCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/countries"></Spinner>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:background="#00BCD4"
+            android:text="SUBMIT" />
+    </TableRow>
+    </TableLayout>
+    <TextView
+        android:id="@+id/submissions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/countries"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="149dp"></Spinner>
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
+        android:inputType="text"
+        android:maxLines="2"
+        android:text="Here are other writer submissions"
+        android:textAlignment="center"/>
 
     <ListView
+        android:layout_marginTop="12dp"
         android:id="@+id/worksView"
-        android:layout_width="332dp"
-        android:layout_height="384dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bio"
-        app:layout_constraintVertical_bias="0.518" />
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        />
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
