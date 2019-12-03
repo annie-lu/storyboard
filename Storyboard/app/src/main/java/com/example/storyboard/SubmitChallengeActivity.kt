@@ -89,7 +89,6 @@ class SubmitChallengeActivity : AppCompatActivity() {
         else {
             //getting a unique id using push().getKey() method
             //it will create a unique id and we will use it as the Primary Key for our Author
-            val id = mDatabaseChallenges!!.push().key
 
 
             //Saving the Author

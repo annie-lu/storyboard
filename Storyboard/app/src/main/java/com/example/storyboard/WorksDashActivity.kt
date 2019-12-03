@@ -1,5 +1,6 @@
 package com.example.storyboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.TextUtils
@@ -72,10 +73,13 @@ class WorksDashActivity: AppCompatActivity() {
 
         buttonUpdate.setOnClickListener {
             val country = spinnerCountry.selectedItem.toString()
-            if (!TextUtils.isEmpty(name)) {
                 //TODO: HERE WE SHOULD PUT THE WORKS ACTIVITY INTENT????
+                val WorksActivityIntent = Intent(applicationContext, WorksActivity::class.java)
+                WorksActivityIntent.putExtra(DashboardActivity.UserID,intent.getStringExtra(DashboardActivity.UserID))
+                WorksActivityIntent.putExtra("TITLE",country)
+                startActivity(WorksActivityIntent)
                 b.dismiss()
-            }
+
         }
 
 
@@ -104,6 +108,10 @@ class WorksDashActivity: AppCompatActivity() {
         buttonCreate.setOnClickListener {
             val titleName = editTextName.text.toString().trim { it <= ' ' }
             if (!TextUtils.isEmpty(titleName)) {
+                val WorksActivityIntent = Intent(applicationContext, WorksActivity::class.java)
+                WorksActivityIntent.putExtra("TITLE",titleName)
+                WorksActivityIntent.putExtra("CURRUSER",intent.getStringExtra("CURRUSER"))
+                startActivity(WorksActivityIntent)
                 //TODO: HERE WE SHOULD PUT THE WORKS ACTIVITY INTENT????
                 b.dismiss()
             }

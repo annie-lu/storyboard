@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/Cancel"
+        android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -47,7 +47,8 @@
     <EditText
         android:id="@+id/content"
         android:layout_width="334dp"
-        android:layout_height="527dp"
+        android:layout_height="207dp"
+        android:text="Default content, edit me"
         android:layout_marginBottom="32dp"
         android:ems="10"
         android:gravity="start|top"
