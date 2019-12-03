@@ -9,7 +9,7 @@ import android.text.InputType
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.*
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class ProfileActivity : AppCompatActivity() {
     private var mDatabase: DatabaseReference? = null
 
     private var editing = false
+    private var uid: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,30 +31,11 @@ class ProfileActivity : AppCompatActivity() {
 
         initializeUI()
 
-        titles?.add("owo")
-        titles?.add("uwu")
-        titles?.add("hello")
-        titles?.add("whats up")
-        titles?.add("owo1")
-        titles?.add("uwu1")
-        titles?.add("hello1")
-        titles?.add("whats up1")
-        titles?.add("owo2")
-        titles?.add("uwu2")
-        titles?.add("hello2")
-        titles?.add("whats up2")
-        titles?.add("owo11")
-        titles?.add("uwu11")
-        titles?.add("hello11")
-        titles?.add("whats up11")
-        titles?.add("owo111")
-        titles?.add("uwu111")
-        titles?.add("hello111")
-        titles?.add("whats up111")
-        titles?.add("owo211")
-        titles?.add("uwu211")
-        titles?.add("hello211")
-        titles?.add("whats up211")
+        intent.getStringExtra("CURRUSER")?.let {
+            uid = it
+        }
+
+
 
 
         //nameTV?.inputType = InputType.TYPE_NULL
@@ -96,6 +78,91 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        mDatabase?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                //clearing the previous artist list
+                titles?.clear()
+                // getting authors only for the Current User
+
+//                Toast.makeText(applicationContext,
+//                    "uid: " + uid, Toast.LENGTH_LONG).show()
+
+                nameTV?.setText(dataSnapshot.child(uid).child("Name").value.toString())
+                bioTV?.setText(dataSnapshot.child(uid).child("Bio").value.toString())
+
+
+                for (postSnapshot in dataSnapshot.child(uid).child("Works").children) {
+
+//                    Toast.makeText(applicationContext,
+//                        "key: " + postSnapshot.key, Toast.LENGTH_LONG).show()
+
+
+                    //if (postSnapshot.key == user) {
+                        val tit = postSnapshot.value.toString()
+                        titles?.add(tit)
+                    //}
+
+                }
+
+                //iterating through all the nodes
+                //getting artist
+                //adding author to the list
+
+                //creating adapter using AuthorList
+                //attaching adapter to the listview
+
+//                val authorAdapter = AuthorList(this@DashboardActivity, authors)
+//                listViewAuthors.adapter = authorAdapter
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+    }
+
+    //Saving user bio/name changes to firebase
+    override fun onPause() {
+        super.onPause()
+
+        mDatabase?.child(uid)?.child("Name")?.setValue(nameTV?.text.toString())
+        mDatabase?.child(uid)?.child("Bio")?.setValue(bioTV?.text.toString())
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.i("HELP", "entered onresume")
+
+        mDatabase?.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                nameTV?.setText(dataSnapshot.child(uid).child("Name").value.toString())
+                bioTV?.setText(dataSnapshot.child(uid).child("Bio").value.toString())
+
+                // ...
+                //});
+                //nameTV?.text = dataSnapshot.child(uid).child("Name").getValue(String.class)
+
+//                if (dataSnapshot.child(uid).hasChild("Name")) {
+//
+//                }
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+    }
+
+
     private fun initializeUI() {
         nameTV = findViewById<EditText>(R.id.name)
         bioTV = findViewById<EditText>(R.id.bio)
@@ -113,6 +180,7 @@ class ProfileActivity : AppCompatActivity() {
         nameTV?.isEnabled = false
         bioTV?.isEnabled = false
 
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users")
 
     }
 

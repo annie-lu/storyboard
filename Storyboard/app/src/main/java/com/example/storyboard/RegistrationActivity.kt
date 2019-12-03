@@ -16,7 +16,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
-
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class RegistrationActivity : AppCompatActivity() {
@@ -27,11 +28,17 @@ class RegistrationActivity : AppCompatActivity() {
     private var progressBar: ProgressBar? = null
 
     private var mAuth: FirebaseAuth? = null
+    private var mDatabaseReference: DatabaseReference? = null
+    private var mDatabase: FirebaseDatabase? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
         mAuth = FirebaseAuth.getInstance()
+        mDatabase = FirebaseDatabase.getInstance()
+        mDatabaseReference = mDatabase!!.reference!!.child("Users")
+
 
         initializeUI()
 
@@ -63,8 +70,18 @@ class RegistrationActivity : AppCompatActivity() {
 
                     //TODO - put unique user id in firebase database
 
+                    val uid = mAuth?.currentUser?.uid.toString()
+
+                    mDatabaseReference?.child(uid)?.child("Name")?.setValue("Default")
+                    mDatabaseReference?.child(uid)?.child("Bio")?.setValue("Default")
+                    mDatabaseReference?.child(uid)?.child("Works")?.setValue("")
+
+
                     val intent = Intent(this@RegistrationActivity, LoginActivity::class.java)
+                    intent.putExtra("CURRUSER", uid)
+
                     startActivity(intent)
+
                 } else {
                     Toast.makeText(applicationContext, "Registration failed! Please try again later", Toast.LENGTH_LONG).show()
                     progressBar!!.visibility = View.GONE

@@ -69,10 +69,10 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(applicationContext, "Login successful!", Toast.LENGTH_LONG)
                         .show()
-                   // val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                    val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
                     Log.e(UserID, mAuth!!.uid)
-                  //  intent.putExtra(UserID,mAuth!!.uid)
-                  //  startActivity(intent)
+                    intent.putExtra(UserID,mAuth!!.uid)
+                    startActivity(intent)
                 } else {
                     Toast.makeText(
                         applicationContext,
