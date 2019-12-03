@@ -1,10 +1,13 @@
 package com.example.storyboard
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -14,15 +17,21 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     fun loadProfileActivity(v: View) {
-        Toast.makeText(this, "Loading Profiles", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Loading Profiles", Toast.LENGTH_SHORT).show()
 
         val profileIntent = Intent(applicationContext, ProfileActivity::class.java)
+
+        //TODO send the current users name so it can be authorized - make sure strings are right
+        val currentUser = FirebaseAuth.getInstance().currentUser!!.uid
+        profileIntent.putExtra("CURRUSER", currentUser)
+        profileIntent.putExtra("VIEWUSER", currentUser)
+
         startActivity(profileIntent)
     }
 
     fun loadCommunityActivity(v: View) {
-        Toast.makeText(this, "Loading Community", Toast.LENGTH_SHORT).show()
-        
+        //Toast.makeText(this, "Loading Community", Toast.LENGTH_SHORT).show()
+
         val communityIntent = Intent(applicationContext, CommunityActivity::class.java)
         startActivity(communityIntent)
     }
