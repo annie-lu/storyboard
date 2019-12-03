@@ -24,8 +24,9 @@ class SubmitChallengeActivity : AppCompatActivity() {
 
 
     private var titles: MutableList<String>? = null
+    private var challenges: MutableList<String>? = null
 
-    internal var spinnerCountry: Spinner ?= null
+    internal var spinnerTitles: Spinner ?= null
 
     private var progressBar: ProgressBar? = null
     private var submitBtn: Button? = null
@@ -40,8 +41,13 @@ class SubmitChallengeActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseChallenges = mDatabase!!.reference!!.child("Challenges")
 
-        titles?.add("owo")
-        titles?.add("uwu")
+        challenges = ArrayList()
+        challenges?.add("owo")
+        challenges?.add("uwu")
+
+        titles = ArrayList()
+        titles?.add("maybe this works out")
+        titles?.add("pleaseplease")
 
         initializeUI()
         submitBtn!!.setOnClickListener { submitChallengeWork() }
@@ -51,24 +57,24 @@ class SubmitChallengeActivity : AppCompatActivity() {
 
     private fun initializeUI() {
 
-        worksView = findViewById(R.id.worksView)
 
-        titles = ArrayList()
+
+        worksView = findViewById(R.id.worksView)
 
         val adapter = ArrayAdapter(this,
             R.layout.worksview_item,
+            R.id.workTitle, challenges!!)
+
+
+        val s_adapter = ArrayAdapter(this,
+            R.layout.worksview_item,
             R.id.workTitle, titles!!)
 
+        spinnerTitles = findViewById<View>(R.id.spinnerCountry) as Spinner
+
+        spinnerTitles?.adapter = s_adapter
+
         worksView?.adapter = adapter
-
-
-        if(findViewById<View>(R.id.spinnerCountry) == null) {
-            Log.i("help","this is null")
-        }else{
-            Log.i("help","this is NOT null")
-        }
-        spinnerCountry = findViewById<View>(R.id.spinnerCountry) as Spinner
-
 
         submitBtn = findViewById(R.id.submitButton)
 
@@ -80,13 +86,9 @@ class SubmitChallengeActivity : AppCompatActivity() {
         progressBar!!.visibility = View.VISIBLE
 
         val selected_work: String
-        selected_work = spinnerCountry!!.selectedItem.toString()
+        selected_work = spinnerTitles!!.selectedItem.toString()
 
-        if (TextUtils.isEmpty(selected_work)) {
-            Toast.makeText(applicationContext, "Please select a work...", Toast.LENGTH_LONG).show()
-            return
-        }
-        else {
+
             //getting a unique id using push().getKey() method
             //it will create a unique id and we will use it as the Primary Key for our Author
 
@@ -107,7 +109,6 @@ class SubmitChallengeActivity : AppCompatActivity() {
 
             progressBar!!.visibility = View.INVISIBLE
             Toast.makeText(this, "Challenge added", Toast.LENGTH_LONG).show()
-        }
 
 
 
