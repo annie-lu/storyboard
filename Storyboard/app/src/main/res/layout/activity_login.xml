@@ -10,6 +10,7 @@
     tools:context=".LoginActivity">
 
     <TextView
+        android:textColor="#00BCD4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Account login"/>
@@ -30,6 +31,8 @@
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:background="#00BCD4"
         android:text="Login" />
 
     <ProgressBar
