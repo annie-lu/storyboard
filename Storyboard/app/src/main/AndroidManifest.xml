@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CommunityActivity" />
         <activity android:name=".DashboardActivity">
-            <!--Uncomment to start from dashboard
+            <!-- uncomment to load dashboard
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
