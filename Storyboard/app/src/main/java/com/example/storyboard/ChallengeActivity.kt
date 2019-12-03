@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
+import kotlinx.android.synthetic.main.worksview_item.view.*
 
 
 class ChallengeActivity : AppCompatActivity() {
@@ -49,7 +50,10 @@ class ChallengeActivity : AppCompatActivity() {
 
         worksView?.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, view, i, l ->
-
+                Log.i("trying this out", adapterView.workTitle.text.toString())
+                Log.i("trying this out", view.toString())
+                Log.i("trying this out", l.toString())
+                intent.putExtra(CHALLENGE_NAME ,i)
                 val intent = Intent(applicationContext, SubmitChallengeActivity::class.java)
 
                 //intent.putExtra(USER_ID, FirebaseUser.getCurrentUser())
@@ -68,6 +72,11 @@ class ChallengeActivity : AppCompatActivity() {
   */
     }
 
+    companion object {
+        val CHALLENGE_NAME = "com.example.tesla.myhomelibrary.authorname"
+        val AUTHOR_ID = "com.example.tesla.myhomelibrary.authorid"
+        val USER_ID = "com.example.tesla.myhomelibrary.UID"
+    }
 
 
 }
