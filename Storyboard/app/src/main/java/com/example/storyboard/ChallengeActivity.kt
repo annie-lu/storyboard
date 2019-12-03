@@ -53,13 +53,15 @@ class ChallengeActivity : AppCompatActivity() {
                 Log.i("trying this out", adapterView.workTitle.text.toString())
                 Log.i("trying this out", view.toString())
                 Log.i("trying this out", l.toString())
-                intent.putExtra(CHALLENGE_NAME ,i)
-                val intent = Intent(applicationContext, SubmitChallengeActivity::class.java)
+
+                val submitIntent = Intent(applicationContext, SubmitChallengeActivity::class.java)
+                submitIntent.putExtra(CHALLENGE_NAME ,adapterView.workTitle.text.toString())
+                submitIntent.putExtra(UserID ,intent.getStringExtra(UserID))
 
                 //intent.putExtra(USER_ID, FirebaseUser.getCurrentUser())
                 //intent.putExtra(AUTHOR_ID, author.authorId)
                 //intent.putExtra(AUTHOR_NAME, author.authorName)
-                startActivity(intent)
+                startActivity(submitIntent)
             }
 
 /*
@@ -73,9 +75,9 @@ class ChallengeActivity : AppCompatActivity() {
     }
 
     companion object {
+        val UserID = "com.example.tesla.myhomelibrary.UID"
         val CHALLENGE_NAME = "com.example.tesla.myhomelibrary.authorname"
         val AUTHOR_ID = "com.example.tesla.myhomelibrary.authorid"
-        val USER_ID = "com.example.tesla.myhomelibrary.UID"
     }
 
 

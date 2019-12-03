@@ -95,10 +95,18 @@ class SubmitChallengeActivity : AppCompatActivity() {
             //Saving the Author
             Log.e("ohno", "attempts to create a challenge")
             val current_challenge = intent.getStringExtra(CHALLENGE_NAME)
-            mDatabaseChallenges!!.child(current_challenge).child(id!!).setValue(selected_work)
+            if( current_challenge == null) {
+                Log.i("help","this is null")
+            }else{
+                Log.i("help",current_challenge)
+            }
+            val uid = intent.getStringExtra(UserID)
+            mDatabaseChallenges!!.child(current_challenge).child(uid).setValue(selected_work)
 
 
             //displaying a success toast
+
+            progressBar!!.visibility = View.INVISIBLE
             Toast.makeText(this, "Challenge added", Toast.LENGTH_LONG).show()
         }
 
@@ -113,7 +121,7 @@ class SubmitChallengeActivity : AppCompatActivity() {
 companion object {
     val CHALLENGE_NAME = "com.example.tesla.myhomelibrary.authorname"
     val AUTHOR_ID = "com.example.tesla.myhomelibrary.authorid"
-    val USER_ID = "com.example.tesla.myhomelibrary.UID"
+    val UserID = "com.example.tesla.myhomelibrary.UID"
 }
 }
 
