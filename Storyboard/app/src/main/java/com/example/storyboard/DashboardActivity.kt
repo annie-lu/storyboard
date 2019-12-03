@@ -47,8 +47,7 @@ class DashboardActivity : AppCompatActivity() {
     fun loadWorksActivity(v: View) {
         Toast.makeText(this, "Loading Works", Toast.LENGTH_SHORT).show()
 
-        /*TODO add back in when works activity is added
         val worksIntent= Intent(applicationContext, WorksActivity::class.java)
-        startActivity(worksIntent)*/
+        startActivity(worksIntent)
     }
 }
