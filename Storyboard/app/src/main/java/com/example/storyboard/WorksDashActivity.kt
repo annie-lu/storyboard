@@ -77,6 +77,7 @@ class WorksDashActivity: AppCompatActivity() {
                 val WorksActivityIntent = Intent(applicationContext, WorksActivity::class.java)
                 WorksActivityIntent.putExtra(DashboardActivity.UserID,intent.getStringExtra(DashboardActivity.UserID))
                 WorksActivityIntent.putExtra("TITLE",country)
+                WorksActivityIntent.putExtra("WORKS",works)
                 startActivity(WorksActivityIntent)
                 b.dismiss()
 
@@ -111,6 +112,7 @@ class WorksDashActivity: AppCompatActivity() {
                 val WorksActivityIntent = Intent(applicationContext, WorksActivity::class.java)
                 WorksActivityIntent.putExtra("TITLE",titleName)
                 WorksActivityIntent.putExtra("CURRUSER",intent.getStringExtra("CURRUSER"))
+                WorksActivityIntent.putExtra("WORKS",works)
                 startActivity(WorksActivityIntent)
                 //TODO: HERE WE SHOULD PUT THE WORKS ACTIVITY INTENT????
                 b.dismiss()

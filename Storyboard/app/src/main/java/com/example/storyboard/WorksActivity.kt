@@ -48,7 +48,7 @@ class WorksActivity: AppCompatActivity()
             mDatabaseTitles!!.child(id!!).child("title").setValue(intent.getStringExtra("TITLE"))
             mDatabaseWorks!!.child(id!!).child("content").setValue(worksContent!!.text.toString().trim() )
             mDatabaseWorks!!.child(id!!).child("title").setValue(intent.getStringExtra("TITLE"))
-            mDatabaseUsers!!.child("Works").setValue(id.toString().trim() )
+            mDatabaseUsers!!.child("Works").setValue(intent.getStringExtra("WORKS")+", "+id.toString().trim() )
             mDatabaseWorks!!.child(id!!).child("title").setValue(intent.getStringExtra("TITLE"))
             true
         }
