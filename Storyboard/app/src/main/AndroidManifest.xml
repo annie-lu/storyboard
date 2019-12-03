@@ -31,6 +31,11 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ProfileActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity android:name=".ChallengeActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".SubmitChallengeActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>
