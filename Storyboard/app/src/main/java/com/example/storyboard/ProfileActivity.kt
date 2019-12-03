@@ -80,8 +80,10 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        mDatabase?.addValueEventListener(object : ValueEventListener {
+        mDatabase?.child(uid)?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                Log.i("HELP", "entered onstart")
 
                 //clearing the previous artist list
                 titles?.clear()
@@ -120,7 +122,7 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-
+                Log.i("HELP", "error: " + databaseError.message)
             }
         })
     }
@@ -140,11 +142,15 @@ class ProfileActivity : AppCompatActivity() {
 
         Log.i("HELP", "entered onresume")
 
-        mDatabase?.addValueEventListener(object : ValueEventListener {
+
+
+        mDatabase?.child(uid)?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                nameTV?.setText(dataSnapshot.child(uid).child("Name").value.toString())
-                bioTV?.setText(dataSnapshot.child(uid).child("Bio").value.toString())
+                Log.i("HELP", "name from firebase: " + dataSnapshot.child("Name").value.toString())
+
+                nameTV?.setText(dataSnapshot.child("Name").value.toString())
+                bioTV?.setText(dataSnapshot.child("Bio").value.toString())
 
                 // ...
                 //});
@@ -157,6 +163,7 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+                Log.i("HELP", "error: " + databaseError.message)
 
             }
         })
