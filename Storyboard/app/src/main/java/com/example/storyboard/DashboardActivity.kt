@@ -39,9 +39,9 @@ class DashboardActivity : AppCompatActivity() {
     fun loadChallengesActivity(v: View) {
         Toast.makeText(this, "Loading Challenges", Toast.LENGTH_SHORT).show()
 
-        /*TODO add back in when challenges activity is created
-        val challengesIntent = Intent(applicationContext, ChallengesActivity::class.java)
-        startActivity(challengesIntent)*/
+
+        val challengeIntent = Intent(applicationContext, ChallengeActivity::class.java)
+        startActivity(challengeIntent)
     }
 
     fun loadWorksActivity(v: View) {

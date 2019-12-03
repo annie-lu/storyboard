@@ -25,15 +25,14 @@ class LoginActivity : AppCompatActivity() {
     private var userPassword: EditText? = null
     private var loginBtn: Button? = null
     private var progressBar: ProgressBar? = null
-
     private var mAuth: FirebaseAuth? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-
-
         mDatabase = FirebaseDatabase.getInstance()
+        Log.e("tried my best", (mDatabase).toString())
         mDatabaseReference = mDatabase!!.reference!!.child("Users")
         mAuth = FirebaseAuth.getInstance()
 
@@ -45,11 +44,6 @@ class LoginActivity : AppCompatActivity() {
     private fun loginUserAccount() {
         progressBar!!.visibility = View.VISIBLE
 
-        // Todo : Retrieve eamil and password, make sure it's not empty
-
-        // Todo : Sigin with given Email and Password
-        // Retrieve UID for Current User if Login successful and store in intent, for the key UserID
-        // Start Intent DashboardActivity if Registration Successful
 
         val email: String = userEmail!!.text.toString()
         val password: String = userPassword!!.text.toString()

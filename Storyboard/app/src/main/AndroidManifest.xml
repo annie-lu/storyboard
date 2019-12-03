@@ -13,12 +13,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CommunityActivity" />
         <activity android:name=".DashboardActivity">
-            <!-- uncomment to load dashboard
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
+            </intent-filter>
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -30,6 +29,11 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ProfileActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity android:name=".ChallengeActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".SubmitChallengeActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
