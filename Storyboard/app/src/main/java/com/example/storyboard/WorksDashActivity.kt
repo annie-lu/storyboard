@@ -21,7 +21,7 @@ class WorksDashActivity: AppCompatActivity() {
     private var mDatabase: FirebaseDatabase? = null
     private var name: String? = null
     private var works: String? = null
-    private var userWorks: List<String>? = null
+    private var userWorks: MutableList<String>? = null
     private var titles: MutableList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,10 +36,12 @@ class WorksDashActivity: AppCompatActivity() {
             Log.e("ahhh","works not currently working")
             works = intent.getStringExtra("WORKS")
         }
-        userWorks = works!!.split(", ")
+        userWorks = works!!.split(", ") as MutableList<String>
 
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseTitles = mDatabase!!.reference!!.child("Titles")
+        mDatabaseUsers = mDatabase!!.reference!!.child("Users")
+
         titles = ArrayList()
         mDatabaseTitles!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -111,6 +113,15 @@ class WorksDashActivity: AppCompatActivity() {
         buttonDelete.setOnClickListener {
 
             //TODO: HERE WE SHOULD DELETE THE SELECTED WORK
+            val selected = spinnerCountry!!.selectedItem.toString()
+            var workId = userWorks!![titles!!.indexOf(selected)]
+            Log.i("HELP", "workid: " + workId)
+            mDatabaseTitles?.ref?.child(workId)?.removeValue()
+            mDatabase?.reference?.child("Works")?.child(workId)?.removeValue()
+            userWorks!!.remove(workId)
+            works = userWorks!!.joinToString(separator = ", ")
+            titles!!.remove(selected)
+
             b.dismiss()
         }
     }

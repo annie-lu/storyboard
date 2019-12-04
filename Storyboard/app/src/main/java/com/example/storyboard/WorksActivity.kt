@@ -5,8 +5,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 private var cancelBtn: Button? = null
 private var saveBtn: Button? = null
@@ -56,7 +55,8 @@ class WorksActivity: AppCompatActivity()
             //mDatabaseWorks!!.child(workid!!).child("title").setValue(intent.getStringExtra("TITLE"))
 
 
-            mDatabaseUsers!!.child("Works").setValue(intent.getStringExtra("WORKS")+", "+workid.toString().trim() )
+            if (!intent.getStringExtra("WORKS").contains(workid.toString().trim()))
+                mDatabaseUsers!!.child("Works").setValue(intent.getStringExtra("WORKS")+", "+workid.toString().trim() )
             //mDatabaseWorks!!.child(workid!!).child("title").setValue(intent.getStringExtra("TITLE"))
 
             //setting proper title
@@ -80,6 +80,19 @@ class WorksActivity: AppCompatActivity()
             saveBtn = findViewById(R.id.save) as Button
 
             worksTitle?.setText(intent.getStringExtra("TITLE").toString())
+
+            mDatabaseWorks?.child(workid)?.addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.hasChild("content"))
+                            worksContent?.setText(dataSnapshot.child("content").value.toString())
+                    }
+
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+                }
+            )
         }
 
 
