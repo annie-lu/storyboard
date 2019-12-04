@@ -78,6 +78,5 @@ class DashboardActivity : AppCompatActivity() {
     companion object {
         val UserMail = "com.example.tesla.myhomelibrary.UMail"
         val UserID = "com.example.tesla.myhomelibrary.UID"
-
     }
 }

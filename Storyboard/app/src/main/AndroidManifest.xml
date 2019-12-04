@@ -11,11 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".DashboardActivityTest"></activity>
         <activity android:name=".CommunityActivity" />
         <activity android:name=".DashboardActivity">
             <intent-filter>
-
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,18 +25,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".WorksDashActivity" />
-
         <activity android:name=".WorksActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".ProfileActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
-        <activity android:name=".ChallengeActivity"
+        <activity
+            android:name=".ChallengeActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".SubmitChallengeActivity"
+        <activity
+            android:name=".SubmitChallengeActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
