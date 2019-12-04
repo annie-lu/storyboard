@@ -43,6 +43,7 @@ class DashboardActivity : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser!!.uid
         profileIntent.putExtra("CURRUSER", currentUser)
         profileIntent.putExtra("VIEWUSER", currentUser)
+        profileIntent.putExtra("WORKS", works)
 
         startActivity(profileIntent)
     }
