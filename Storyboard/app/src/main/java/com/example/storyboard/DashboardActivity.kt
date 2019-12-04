@@ -72,6 +72,7 @@ class DashboardActivity : AppCompatActivity() {
         val worksIntent= Intent(applicationContext, WorksDashActivity::class.java)
         worksIntent.putExtra("CURRUSER", currentUser)
         worksIntent.putExtra("VIEWUSER", currentUser)
+        worksIntent.putExtra("WORKS", works)
         startActivity(worksIntent)
     }
 

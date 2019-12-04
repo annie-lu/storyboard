@@ -28,6 +28,7 @@ class CommunityActivity : AppCompatActivity() {
     private var mDatabase: FirebaseDatabase? = null
     internal lateinit var works: ArrayList<String>
     private lateinit var user: String
+    private lateinit var workidString: String
 
     private var users: MutableList<String>? = null
 
@@ -40,6 +41,8 @@ class CommunityActivity : AppCompatActivity() {
         mDatabaseUsers = FirebaseDatabase.getInstance().reference
 
         works = ArrayList()
+
+        workidString = ""
 
     }
 
@@ -84,10 +87,13 @@ class CommunityActivity : AppCompatActivity() {
                         val profileIntent = Intent(applicationContext, ProfileActivity::class.java)
 
                         val currentUser = FirebaseAuth.getInstance().currentUser!!.uid
+
+                        workidString = postSnapshot.child("Works").value.toString()
+
                         Log.i("search this", viewUser)
                         profileIntent.putExtra("CURRUSER", currentUser)
                         profileIntent.putExtra("VIEWUSER", viewUser)
-                        profileIntent.putStringArrayListExtra("WORK", works)
+                        profileIntent.putExtra("WORKS", workidString)
 
                         startActivity(profileIntent)
                     }
