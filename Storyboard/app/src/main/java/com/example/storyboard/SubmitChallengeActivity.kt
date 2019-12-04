@@ -1,21 +1,11 @@
 package com.example.storyboard
 
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.media.Image
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.text.InputType
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 
 class SubmitChallengeActivity : AppCompatActivity() {
@@ -31,23 +21,34 @@ class SubmitChallengeActivity : AppCompatActivity() {
     private var progressBar: ProgressBar? = null
     private var submitBtn: Button? = null
     private var mDatabaseChallenges: DatabaseReference? = null
+
+    private var mDatabaseTitles: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
 
+    private var works: List<String>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.submit_challenge)
 
 
+        works = intent.getStringExtra("WORKS").split(", ")
+
         mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseChallenges = mDatabase!!.reference!!.child("Challenges")
+        mDatabaseTitles = mDatabase!!.reference!!.child("Titles")
+        titles = ArrayList()
+        mDatabaseTitles!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for(w in works!!){
+                    titles?.add(dataSnapshot.child(w).child("title").value.toString())
+                }
+            } override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
 
         challenges = ArrayList()
         challenges?.add("owo")
         challenges?.add("uwu")
 
-        titles = ArrayList()
-        titles?.add("maybe this works out")
-        titles?.add("pleaseplease")
 
         initializeUI()
         submitBtn!!.setOnClickListener { submitChallengeWork() }

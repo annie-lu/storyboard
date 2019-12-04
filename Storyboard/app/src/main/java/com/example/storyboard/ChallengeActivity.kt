@@ -57,6 +57,7 @@ class ChallengeActivity : AppCompatActivity() {
                 val submitIntent = Intent(applicationContext, SubmitChallengeActivity::class.java)
                 submitIntent.putExtra(CHALLENGE_NAME ,adapterView.workTitle.text.toString())
                 submitIntent.putExtra(UserID ,intent.getStringExtra(UserID))
+                submitIntent.putExtra("WORKS" ,intent.getStringExtra("WORKS"))
 
                 //intent.putExtra(USER_ID, FirebaseUser.getCurrentUser())
                 //intent.putExtra(AUTHOR_ID, author.authorId)

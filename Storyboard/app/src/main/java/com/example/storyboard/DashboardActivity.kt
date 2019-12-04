@@ -8,12 +8,30 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+
+private var mDatabaseUsers: DatabaseReference? = null
+private var mDatabase: FirebaseDatabase? = null
+private var works: String = ""
 
 class DashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+
+
+        mDatabase = FirebaseDatabase.getInstance()
+        mDatabaseUsers = mDatabase!!.getReference("Users")
+
+        val currentUser = FirebaseAuth.getInstance().currentUser!!.uid
+        mDatabaseUsers!!.child(currentUser).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                works = dataSnapshot.child("Works").value.toString()
+            } override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
     }
 
     fun loadProfileActivity(v: View) {
@@ -42,6 +60,7 @@ class DashboardActivity : AppCompatActivity() {
 
         val challengeIntent = Intent(applicationContext, ChallengeActivity::class.java)
         challengeIntent.putExtra(UserID,intent.getStringExtra(UserID))
+        challengeIntent.putExtra("WORKS",works)
         startActivity(challengeIntent)
     }
 
