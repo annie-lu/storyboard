@@ -6,9 +6,7 @@ import android.os.PersistableBundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
@@ -18,10 +16,13 @@ class WorksDashActivity: AppCompatActivity() {
     private var createBtn: Button? = null
     private var editBtn: Button? = null
 
+    private var mDatabaseTitles: DatabaseReference? = null
     private var mDatabaseUsers: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
     private var name: String? = null
     private var works: String? = null
+    private var userWorks: List<String>? = null
+    private var titles: MutableList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +31,21 @@ class WorksDashActivity: AppCompatActivity() {
 
         val user = intent.getStringExtra("CURRUSER")
 
-        mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseUsers = mDatabase!!.getReference("Users")
 
-        mDatabaseUsers!!.child(user).addValueEventListener(object : ValueEventListener {
+        if(works==null){
+            Log.e("ahhh","works not currently working")
+            works = intent.getStringExtra("WORKS")
+        }
+        userWorks = works!!.split(", ")
+
+        mDatabase = FirebaseDatabase.getInstance()
+        mDatabaseTitles = mDatabase!!.reference!!.child("Titles")
+        titles = ArrayList()
+        mDatabaseTitles!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                name = dataSnapshot.child("Name").value.toString()
-                works = dataSnapshot.child("Works").value.toString()
+                for(w in userWorks!!){
+                    titles?.add(dataSnapshot.child(w).child("title").value.toString())
+                }
             } override fun onCancelled(databaseError: DatabaseError) {
             }
         })
@@ -44,17 +53,17 @@ class WorksDashActivity: AppCompatActivity() {
         initializeUI()
 
         createBtn?.setOnClickListener {
-            showCreateDialog(name!!, works!!)
+            showCreateDialog()
             true
         }
 
         editBtn?.setOnClickListener {
-            showEditDialog(name!!, works!!)
+            showEditDialog()
             true
         }
     }
 
-    private fun showEditDialog(authorName: String, authorWorks: String) {
+    private fun showEditDialog() {
 
         val dialogBuilder = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -62,6 +71,16 @@ class WorksDashActivity: AppCompatActivity() {
         dialogBuilder.setView(dialogView)
 
         val spinnerCountry = dialogView.findViewById<View>(R.id.spinnerCountry) as Spinner
+        val spinnerAdapter = ArrayAdapter<String>(
+            this, android.R.layout.simple_spinner_item,
+            titles!!
+        ) //selected item will look like a spinner set from XML
+        spinnerAdapter.setDropDownViewResource(
+            android.R.layout
+                .simple_spinner_dropdown_item
+        )
+        spinnerCountry.adapter = spinnerAdapter
+
         val buttonUpdate = dialogView.findViewById<View>(R.id.buttonUpdate) as Button
         val buttonDelete = dialogView.findViewById<View>(R.id.buttonDelete) as Button
 
@@ -74,10 +93,15 @@ class WorksDashActivity: AppCompatActivity() {
         buttonUpdate.setOnClickListener {
             val country = spinnerCountry.selectedItem.toString()
                 //TODO: HERE WE SHOULD PUT THE WORKS ACTIVITY INTENT????
+
+            val selected: String
+            selected = spinnerCountry!!.selectedItem.toString()
+            Toast.makeText(applicationContext, selected, Toast.LENGTH_LONG).show()
                 val WorksActivityIntent = Intent(applicationContext, WorksActivity::class.java)
-                WorksActivityIntent.putExtra(DashboardActivity.UserID,intent.getStringExtra(DashboardActivity.UserID))
-                WorksActivityIntent.putExtra("TITLE",country)
+                WorksActivityIntent.putExtra("TITLE",selected)
+                WorksActivityIntent.putExtra("CURRUSER",intent.getStringExtra("CURRUSER"))
                 WorksActivityIntent.putExtra("WORKS",works)
+                WorksActivityIntent.putExtra("WORKID", mDatabase!!.getReference("Works").push().key)
                 startActivity(WorksActivityIntent)
                 b.dismiss()
 
@@ -91,7 +115,7 @@ class WorksDashActivity: AppCompatActivity() {
         }
     }
 
-    private fun showCreateDialog(authorName: String, authorWorks: String) {
+    private fun showCreateDialog() {
 
         val dialogBuilder = AlertDialog.Builder(this)
         val inflater = layoutInflater
