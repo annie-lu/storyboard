@@ -110,7 +110,16 @@ class CommunityActivity : AppCompatActivity() {
                 works.clear()
                 var i = 0
                 var r = Random()
-                var ranNums = (1..5).map { r.nextInt((numWorks.toInt() + 1)) }
+                var ranNums:IntArray = IntArray(5)
+                var randI = 0
+                while(randI < 5 && randI < numWorks) {
+                    val currR = r.nextInt((numWorks.toInt() + 1))
+                    if (!ranNums.contains(currR)) {
+                        ranNums[randI] = currR
+                        randI ++
+                    }
+                }
+                //var ranNums = (1..5).map { r.nextInt((numWorks.toInt() + 1)) }
                 Log.i("random", ranNums.toString())
 
                 for (postSnapshot in dataSnapshot.children) {
