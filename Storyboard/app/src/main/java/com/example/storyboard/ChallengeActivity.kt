@@ -29,8 +29,6 @@ class ChallengeActivity : AppCompatActivity() {
 
         initializeUI()
 
-        titles?.add("owo")
-        titles?.add("uwu")
 
 
 
@@ -41,6 +39,8 @@ class ChallengeActivity : AppCompatActivity() {
         worksView = findViewById(R.id.worksView)
 
         titles = ArrayList()
+        titles?.add("5k Words")
+        titles?.add("Creative Prompt")
 
         val adapter = ArrayAdapter(this,
             R.layout.worksview_item,
@@ -57,6 +57,7 @@ class ChallengeActivity : AppCompatActivity() {
                 val submitIntent = Intent(applicationContext, SubmitChallengeActivity::class.java)
                 submitIntent.putExtra(CHALLENGE_NAME ,adapterView.workTitle.text.toString())
                 submitIntent.putExtra(UserID ,intent.getStringExtra(UserID))
+                submitIntent.putExtra("WORKS" ,intent.getStringExtra("WORKS"))
 
                 //intent.putExtra(USER_ID, FirebaseUser.getCurrentUser())
                 //intent.putExtra(AUTHOR_ID, author.authorId)

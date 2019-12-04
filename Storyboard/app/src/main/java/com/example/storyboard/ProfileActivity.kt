@@ -1,12 +1,9 @@
 package com.example.storyboard
 
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.media.Image
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.text.InputType
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
@@ -20,10 +17,13 @@ class ProfileActivity : AppCompatActivity() {
     private var worksView: ListView? = null
 
     private var titles: MutableList<String>? = null
-    private var mDatabase: DatabaseReference? = null
+    private var mDatabaseUsers: DatabaseReference? = null
+    private var mDatabaseTitles: DatabaseReference? = null
+
+    private var worksPassed: String = ""
 
     private var editing = false
-    private var uid: String = ""
+    private var profUID: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +31,22 @@ class ProfileActivity : AppCompatActivity() {
 
         initializeUI()
 
-        intent.getStringExtra("CURRUSER")?.let {
-            uid = it
+        intent.getStringExtra("VIEWUSER")?.let {
+            profUID = it
         }
 
+        if (!profUID.equals(intent.getStringExtra("CURRUSER"))) {
+            editButton?.visibility = View.INVISIBLE
+            editButton?.isEnabled = false
+        }
+        else {
+            editButton?.visibility = View.VISIBLE
+            editButton?.isEnabled = true
+        }
 
-
+        intent.getStringExtra("WORKS")?.let {
+            worksPassed = it
+        }
 
         //nameTV?.inputType = InputType.TYPE_NULL
         //nameTV?.isEnabled = false
@@ -61,78 +71,36 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-        //NOT WORKING
-        nameTV?.setOnClickListener {
-            Toast.makeText(this, "Long click detected", Toast.LENGTH_SHORT).show()
-            nameTV?.isEnabled = true
-            Log.i("HELP", "name clicked")
-            true
-        }
 
-        bioTV?.setOnLongClickListener {
-            Toast.makeText(this, "Long click detected", Toast.LENGTH_SHORT).show()
-            bioTV?.isEnabled = true
-            Log.i("HELP", "bio clicked")
 
-            true
-        }
+//        //NOT WORKING
+//        nameTV?.setOnClickListener {
+//            Toast.makeText(this, "Long click detected", Toast.LENGTH_SHORT).show()
+//            nameTV?.isEnabled = true
+//            Log.i("HELP", "name clicked")
+//            true
+//        }
+//
+//        bioTV?.setOnLongClickListener {
+//            Toast.makeText(this, "Long click detected", Toast.LENGTH_SHORT).show()
+//            bioTV?.isEnabled = true
+//            Log.i("HELP", "bio clicked")
+//
+//            true
+//        }
     }
 
     override fun onStart() {
         super.onStart()
-        mDatabase?.child(uid)?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                Log.i("HELP", "entered onstart")
-
-                //clearing the previous artist list
-                titles?.clear()
-                // getting authors only for the Current User
-
-//                Toast.makeText(applicationContext,
-//                    "uid: " + uid, Toast.LENGTH_LONG).show()
-
-                nameTV?.setText(dataSnapshot.child(uid).child("Name").value.toString())
-                bioTV?.setText(dataSnapshot.child(uid).child("Bio").value.toString())
-
-
-                for (postSnapshot in dataSnapshot.child(uid).child("Works").children) {
-
-//                    Toast.makeText(applicationContext,
-//                        "key: " + postSnapshot.key, Toast.LENGTH_LONG).show()
-
-
-                    //if (postSnapshot.key == user) {
-                        val tit = postSnapshot.value.toString()
-                        titles?.add(tit)
-                    //}
-
-                }
-
-                //iterating through all the nodes
-                //getting artist
-                //adding author to the list
-
-                //creating adapter using AuthorList
-                //attaching adapter to the listview
-
-//                val authorAdapter = AuthorList(this@DashboardActivity, authors)
-//                listViewAuthors.adapter = authorAdapter
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.i("HELP", "error: " + databaseError.message)
-            }
-        })
     }
 
     //Saving user bio/name changes to firebase
     override fun onPause() {
         super.onPause()
 
-        mDatabase?.child(uid)?.child("Name")?.setValue(nameTV?.text.toString())
-        mDatabase?.child(uid)?.child("Bio")?.setValue(bioTV?.text.toString())
+        mDatabaseUsers?.child(profUID)?.child("Name")?.setValue(nameTV?.text.toString())
+        mDatabaseUsers?.child(profUID)?.child("Bio")?.setValue(bioTV?.text.toString())
 
     }
 
@@ -140,34 +108,75 @@ class ProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        Log.i("HELP", "entered onresume")
-
-
-
-        mDatabase?.child(uid)?.addValueEventListener(object : ValueEventListener {
+        mDatabaseUsers?.child(profUID)?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                Log.i("HELP", "name from firebase: " + dataSnapshot.child("Name").value.toString())
-
+                titles?.clear()
                 nameTV?.setText(dataSnapshot.child("Name").value.toString())
                 bioTV?.setText(dataSnapshot.child("Bio").value.toString())
-
-                // ...
-                //});
-                //nameTV?.text = dataSnapshot.child(uid).child("Name").getValue(String.class)
-
-//                if (dataSnapshot.child(uid).hasChild("Name")) {
-//
-//                }
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.i("HELP", "error: " + databaseError.message)
-
             }
         })
+
+        if (!worksPassed.equals("")) {
+
+            var rawWorksList = worksPassed.split(", ")
+            mDatabaseTitles = FirebaseDatabase.getInstance().getReference("Titles")
+            mDatabaseTitles!!.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (w in rawWorksList) {
+                        titles?.add(dataSnapshot.child(w).child("title").value.toString())
+                    }
+
+                    val adapter = ArrayAdapter(
+                        this@ProfileActivity,
+                        R.layout.worksview_item,
+                        R.id.workTitle, titles!!
+                    )
+
+                    worksView?.adapter = adapter
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.i("HELP", "error = " + databaseError.message)
+                }
+            })
+        }
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//
+//        Log.i("HELP", "entered onresume")
+//
+//
+//
+//        mDatabaseUsers?.child(profUID)?.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//
+//                Log.i("HELP", "name from firebase: " + dataSnapshot.child("Name").value.toString())
+//
+//                nameTV?.setText(dataSnapshot.child("Name").value.toString())
+//                bioTV?.setText(dataSnapshot.child("Bio").value.toString())
+//
+//                // ...
+//                //});
+//                //nameTV?.text = dataSnapshot.child(profUID).child("Name").getValue(String.class)
+//
+////                if (dataSnapshot.child(profUID).hasChild("Name")) {
+////
+////                }
+//
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                Log.i("HELP", "error: " + databaseError.message)
+//
+//            }
+//        })
+//    }
 
 
     private fun initializeUI() {
@@ -178,16 +187,14 @@ class ProfileActivity : AppCompatActivity() {
 
         titles = ArrayList()
 
-        val adapter = ArrayAdapter(this,
-            R.layout.worksview_item,
-            R.id.workTitle, titles!!)
 
-        worksView?.adapter = adapter
 
         nameTV?.isEnabled = false
         bioTV?.isEnabled = false
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users")
+
+
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users")
 
     }
 

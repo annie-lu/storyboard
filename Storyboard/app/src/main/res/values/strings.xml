@@ -1,10 +1,6 @@
 <resources>
     <array name="countries">
         <item name="america">America</item>
-        <item name="france">France</item>
-        <item name="spain">Spain</item>
-        <item name="columbia">Columbia</item>
-        <item name="russia">Russia</item>
     </array>
     <string name="app_name">Storyboard</string>
     <string name="nameString">Default Name</string>
