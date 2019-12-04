@@ -1,6 +1,7 @@
 package com.example.storyboard
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -17,12 +18,12 @@ private var mDatabaseWorks: DatabaseReference? = null
 private var mDatabaseUsers: DatabaseReference? = null
 private var mDatabaseTitles: DatabaseReference? = null
 private var mDatabase: FirebaseDatabase? = null
+private var workid: String = ""
+
 class WorksActivity: AppCompatActivity()
     {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
 
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseWorks = mDatabase!!.reference!!.child("Works")
@@ -30,6 +31,8 @@ class WorksActivity: AppCompatActivity()
 
 
         mDatabaseUsers = mDatabase!!.reference!!.child("Users").child(intent.getStringExtra("CURRUSER"))
+
+        workid = intent.getStringExtra("WORKID")
 
         super.onCreate(savedInstanceState)
 
@@ -39,17 +42,31 @@ class WorksActivity: AppCompatActivity()
 
         cancelBtn?.setOnClickListener {
             //TODO: HERE WE SHOULD EXIT OUT
-            true
+            finish()
         }
 
         saveBtn?.setOnClickListener {
             //TODO: HERE WE SHOULD CREATE THE WORKS OR EDIT THE WORKS
             val id = mDatabaseWorks!!.push().key
-            mDatabaseTitles!!.child(id!!).child("title").setValue(intent.getStringExtra("TITLE"))
-            mDatabaseWorks!!.child(id!!).child("content").setValue(worksContent!!.text.toString().trim() )
-            mDatabaseWorks!!.child(id!!).child("title").setValue(intent.getStringExtra("TITLE"))
-            mDatabaseUsers!!.child("Works").setValue(intent.getStringExtra("WORKS")+", "+id.toString().trim() )
-            mDatabaseWorks!!.child(id!!).child("title").setValue(intent.getStringExtra("TITLE"))
+
+            //defunct
+            //mDatabaseTitles!!.child(workid!!).child("title").setValue(intent.getStringExtra("TITLE"))
+
+            mDatabaseWorks!!.child(workid!!).child("content").setValue(worksContent!!.text.toString().trim() )
+            //mDatabaseWorks!!.child(workid!!).child("title").setValue(intent.getStringExtra("TITLE"))
+
+
+            mDatabaseUsers!!.child("Works").setValue(intent.getStringExtra("WORKS")+", "+workid.toString().trim() )
+            //mDatabaseWorks!!.child(workid!!).child("title").setValue(intent.getStringExtra("TITLE"))
+
+            //setting proper title
+
+            mDatabaseTitles!!.child(workid!!).child("title").setValue(worksTitle!!.text.toString().trim())
+            mDatabaseWorks!!.child(workid!!).child("title").setValue(worksTitle!!.text.toString().trim())
+
+
+            Log.i("HELP", "title: " + worksTitle!!.text.toString())
+
             true
         }
 
@@ -61,6 +78,8 @@ class WorksActivity: AppCompatActivity()
             worksContent = findViewById<EditText>(R.id.content)
             cancelBtn = findViewById(R.id.cancel) as Button
             saveBtn = findViewById(R.id.save) as Button
+
+            worksTitle?.setText(intent.getStringExtra("TITLE").toString())
         }
 
 
