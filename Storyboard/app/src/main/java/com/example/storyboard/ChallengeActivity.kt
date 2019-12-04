@@ -55,7 +55,7 @@ class ChallengeActivity : AppCompatActivity() {
                 Log.i("trying this out", l.toString())
 
                 val submitIntent = Intent(applicationContext, SubmitChallengeActivity::class.java)
-                submitIntent.putExtra(CHALLENGE_NAME ,adapterView.workTitle.text.toString())
+                submitIntent.putExtra("CHALLENGE_NAME" ,adapterView.workTitle.text.toString())
                 submitIntent.putExtra(UserID ,intent.getStringExtra(UserID))
                 submitIntent.putExtra("WORKS" ,intent.getStringExtra("WORKS"))
 
@@ -77,7 +77,6 @@ class ChallengeActivity : AppCompatActivity() {
 
     companion object {
         val UserID = "com.example.tesla.myhomelibrary.UID"
-        val CHALLENGE_NAME = "com.example.tesla.myhomelibrary.authorname"
         val AUTHOR_ID = "com.example.tesla.myhomelibrary.authorid"
     }
 

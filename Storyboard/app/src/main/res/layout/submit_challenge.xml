@@ -32,6 +32,16 @@
         android:typeface="normal"
         android:inputType="text" />
 
+    <Button
+        android:layout_marginTop="24dp"
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:background="#00BCD4"
+        android:text="SUBMIT" />
+
     <ScrollView android:layout_height="100dp"
         android:layout_marginTop="24dp"
         android:layout_width="match_parent">
@@ -45,35 +55,13 @@
         android:text="Submit your work to complete this challenge! We add the challenge description here!"/>
     </ScrollView>
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*"
-        android:padding="5dp">
 
-    <TableRow>
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></Spinner>
-
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="#fff"
-            android:background="#00BCD4"
-            android:text="SUBMIT" />
-    </TableRow>
-    </TableLayout>
     <TextView
         android:id="@+id/submissions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
         android:background="@android:color/transparent"
         android:inputType="text"
         android:maxLines="2"
@@ -84,7 +72,7 @@
         android:layout_marginTop="12dp"
         android:id="@+id/worksView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         />
 
 

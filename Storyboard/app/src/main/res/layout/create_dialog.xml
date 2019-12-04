@@ -18,7 +18,9 @@
             android:id="@+id/buttonCreate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create" />
+            android:text="Create"
+            android:background="#00BCD4"
+            android:textColor="#FFFFFF"/>
 
 
 
