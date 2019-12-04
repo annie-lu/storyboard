@@ -101,7 +101,7 @@ class WorksDashActivity: AppCompatActivity() {
                 WorksActivityIntent.putExtra("TITLE",selected)
                 WorksActivityIntent.putExtra("CURRUSER",intent.getStringExtra("CURRUSER"))
                 WorksActivityIntent.putExtra("WORKS",works)
-                WorksActivityIntent.putExtra("WORKID", mDatabase!!.getReference("Works").push().key)
+                WorksActivityIntent.putExtra("WORKID", userWorks!![titles!!.indexOf(selected)])
                 startActivity(WorksActivityIntent)
                 b.dismiss()
 
