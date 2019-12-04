@@ -7,7 +7,7 @@
 
 
     <Spinner
-        android:id="@+id/spinnerCountry"
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextName"
@@ -19,19 +19,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonUpdate"
+            android:id="@+id/buttonSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Update"
-            />
-
-        <Button
-            android:id="@+id/buttonDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Delete" />
+            android:text="Submit"
+            android:background="#00BCD4"
+            android:textColor="#FFFFFF"/>
 
     </LinearLayout>
 

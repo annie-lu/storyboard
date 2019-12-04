@@ -26,8 +26,8 @@
 
     <EditText
         android:id="@+id/content"
-        android:layout_width="349dp"
-        android:layout_height="425dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="25dp"
         android:ems="10"
