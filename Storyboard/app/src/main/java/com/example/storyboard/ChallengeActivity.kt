@@ -29,8 +29,6 @@ class ChallengeActivity : AppCompatActivity() {
 
         initializeUI()
 
-        titles?.add("owo")
-        titles?.add("uwu")
 
 
 
@@ -41,6 +39,8 @@ class ChallengeActivity : AppCompatActivity() {
         worksView = findViewById(R.id.worksView)
 
         titles = ArrayList()
+        titles?.add("5k Words")
+        titles?.add("Creative Prompt")
 
         val adapter = ArrayAdapter(this,
             R.layout.worksview_item,

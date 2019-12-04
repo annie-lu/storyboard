@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 
 
 class SubmitChallengeActivity : AppCompatActivity() {
@@ -16,7 +18,7 @@ class SubmitChallengeActivity : AppCompatActivity() {
     private var titles: MutableList<String>? = null
     private var challenges: MutableList<String>? = null
 
-    internal var spinnerTitles: Spinner ?= null
+    private var spinner: Spinner ?= null
 
     private var progressBar: ProgressBar? = null
     private var submitBtn: Button? = null
@@ -26,6 +28,8 @@ class SubmitChallengeActivity : AppCompatActivity() {
     private var mDatabase: FirebaseDatabase? = null
 
     private var works: List<String>? = null
+
+    private var selectedWork: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.submit_challenge)
@@ -46,8 +50,8 @@ class SubmitChallengeActivity : AppCompatActivity() {
         })
 
         challenges = ArrayList()
-        challenges?.add("owo")
-        challenges?.add("uwu")
+        challenges?.add("5k Words")
+        challenges?.add("Creative Prompt")
 
 
         initializeUI()
@@ -59,23 +63,24 @@ class SubmitChallengeActivity : AppCompatActivity() {
     private fun initializeUI() {
 
 
-
-        worksView = findViewById(R.id.worksView)
-
         val adapter = ArrayAdapter(this,
             R.layout.worksview_item,
             R.id.workTitle, challenges!!)
 
-
-        val s_adapter = ArrayAdapter(this,
-            R.layout.worksview_item,
-            R.id.workTitle, titles!!)
-
-        spinnerTitles = findViewById<View>(R.id.spinnerCountry) as Spinner
-
-        spinnerTitles?.adapter = s_adapter
-
+        worksView = findViewById(R.id.worksView)
         worksView?.adapter = adapter
+
+        val spinner = findViewById<View>(R.id.spinner) as Spinner
+        val spinnerAdapter = ArrayAdapter<String>(
+            this, android.R.layout.simple_spinner_item,
+            titles!!
+        ) //selected item will look like a spinner set from XML
+        spinnerAdapter.setDropDownViewResource(
+            android.R.layout
+                .simple_spinner_dropdown_item
+        )
+        spinner.adapter = spinnerAdapter
+
 
         submitBtn = findViewById(R.id.submitButton)
 
@@ -86,8 +91,8 @@ class SubmitChallengeActivity : AppCompatActivity() {
     private fun submitChallengeWork(){
         progressBar!!.visibility = View.VISIBLE
 
-        val selected_work: String
-        selected_work = spinnerTitles!!.selectedItem.toString()
+        val selected: String
+        selected = spinner!!.selectedItem.toString()
 
 
             //getting a unique id using push().getKey() method
@@ -103,7 +108,7 @@ class SubmitChallengeActivity : AppCompatActivity() {
                 Log.i("help",current_challenge)
             }
             val uid = intent.getStringExtra(UserID)
-            mDatabaseChallenges!!.child(current_challenge).child(uid).setValue(selected_work)
+            mDatabaseChallenges!!.child(current_challenge).child(uid).setValue(selected)
 
 
             //displaying a success toast
