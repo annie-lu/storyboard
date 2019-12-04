@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.print.PrintAttributes
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -18,87 +19,74 @@ import com.google.firebase.database.*
 
 class CommunityActivity : AppCompatActivity() {
 
-    internal lateinit var databaseAuthors: DatabaseReference
+    private var mDatabaseUsers: DatabaseReference? = null
+    private var mDatabase: FirebaseDatabase? = null
+    private var name: String? = null
+    private var works: String? = null
+    private lateinit var user: String
+
+    private var users: MutableList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i("community", "entered on create")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community)
 
-        databaseAuthors = FirebaseDatabase.getInstance().getReference("Titles")
+        mDatabase = FirebaseDatabase.getInstance()
+        mDatabaseUsers = FirebaseDatabase.getInstance().reference
 
-        createLayout()
     }
 
-    @SuppressLint("ResourceType")
-    fun createLayout() {
-        val layout = findViewById(R.id.linearLayout) as LinearLayout
-
-        //set the properties for button
-        for (x in 0..10) {
-            val btnTag = Button(this)
-
-            btnTag.setLayoutParams(ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ActionBar.LayoutParams.WRAP_CONTENT
-            ))
-
-            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.setMargins(10,10,10,10)
-            btnTag.layoutParams = params
-
-
-            btnTag.setText("Button")
-            btnTag.id = x
-            btnTag.setBackgroundResource(R.drawable.dashboardbutton)
-            btnTag.setTextColor(Color.parseColor("#ffffff"))
-
-            btnTag.setOnClickListener {
-                val profileIntent = Intent(applicationContext, ProfileActivity::class.java)
-
-                val currentUser = FirebaseAuth.getInstance().currentUser!!.uid
-                profileIntent.putExtra("CURRUSER", currentUser)
-                profileIntent.putExtra("VIEWUSER", currentUser)
-
-                startActivity(profileIntent)
-            }
-
-
-            //add button to the layout
-            layout.addView(btnTag)
-        }
-    }
-
-    // Todo onStart
-    /*override fun onStart() {
+    override fun onStart() {
         super.onStart()
-        databaseAuthors.addValueEventListener(object : ValueEventListener {
+        val layout = findViewById(R.id.linearLayout) as LinearLayout
+        var x = 0
+        Log.i("community", "entered onStart")
+        layout.removeAllViews()
+
+        mDatabaseUsers!!.child("Users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                //clearing the previous artist list
-                authors.clear()
-
-                // getting authors only for the Current User
-                //iterating through all the nodes
+                Log.i("community", "made it here")
                 for (postSnapshot in dataSnapshot.children) {
-                    //getting artist
-                    //adding author to the list
-                    var currentUser = FirebaseAuth.getInstance().currentUser!!.uid
-                    if(postSnapshot.key == currentUser) {
-                        for (postSnapshot2 in postSnapshot.children) {
-                            val author = postSnapshot2.getValue<Author>(Author::class.java)
-                            authors.add(author!!)
-                        }
+                    x++
+                    val author = postSnapshot.child("Name").value.toString()
+                    val viewUser = postSnapshot.key
+
+                    //Create a button
+                    val btnTag = Button(applicationContext)
+
+                    btnTag.setLayoutParams(ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.WRAP_CONTENT
+                    ))
+
+                    val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
+                    params.setMargins(10,10,10,10)
+                    btnTag.layoutParams = params
+
+
+                    btnTag.setText(author)
+                    btnTag.id = x
+                    btnTag.setBackgroundResource(R.drawable.dashboardbutton)
+                    btnTag.setTextColor(Color.parseColor("#ffffff"))
+
+                    btnTag.setOnClickListener {
+                        val profileIntent = Intent(applicationContext, ProfileActivity::class.java)
+
+                        val currentUser = FirebaseAuth.getInstance().currentUser!!.uid
+                        Log.i("search this", viewUser)
+                        profileIntent.putExtra("CURRUSER", currentUser)
+                        profileIntent.putExtra("VIEWUSER", viewUser)
+
+                        startActivity(profileIntent)
                     }
+
+                    //add button to the layout
+                    layout.addView(btnTag)
                 }
-                val authorListAdapter = AuthorList(this@DashboardActivity, authors)
-                listViewAuthors.adapter = authorListAdapter
-                //creating adapter using AuthorList
-                //attaching adapter to the listview
-            }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-
+            } override fun onCancelled(databaseError: DatabaseError) {
             }
         })
-    }*/
+    }
 }
