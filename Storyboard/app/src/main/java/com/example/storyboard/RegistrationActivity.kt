@@ -68,8 +68,6 @@ class RegistrationActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Registration successful!", Toast.LENGTH_LONG).show()
                     progressBar!!.visibility = View.GONE
 
-                    //TODO - put unique user id in firebase database
-
                     val uid = mAuth?.currentUser?.uid.toString()
 
                     mDatabaseReference?.child(uid)?.child("Name")?.setValue("Default")

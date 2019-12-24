@@ -27,10 +27,8 @@ class CommunityActivity : AppCompatActivity() {
     private var mDatabaseUsers: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
     internal lateinit var works: ArrayList<String>
-    private lateinit var user: String
     private lateinit var workidString: String
 
-    private var users: MutableList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("community", "entered on create")

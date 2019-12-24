@@ -4,7 +4,7 @@
     <string name="firebase_database_url" translatable="false">https://storyboardapp-830f7.firebaseio.com</string>
     <string name="gcm_defaultSenderId" translatable="false">362260803457</string>
     <string name="google_api_key" translatable="false">AIzaSyAyD6hi6IVJKz6CsOvwxGIoD9nLYWXEBeU</string>
-    <string name="google_app_id" translatable="false">1:362260803457:android:4dc38a6132bfc87c808280</string>
+    <string name="google_app_id" translatable="false">1:362260803457:android:42503b240ef0da11808280</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAyD6hi6IVJKz6CsOvwxGIoD9nLYWXEBeU</string>
     <string name="google_storage_bucket" translatable="false">storyboardapp-830f7.appspot.com</string>
     <string name="project_id" translatable="false">storyboardapp-830f7</string>

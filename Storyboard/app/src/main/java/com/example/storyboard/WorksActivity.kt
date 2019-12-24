@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
 
@@ -40,32 +41,26 @@ class WorksActivity: AppCompatActivity()
         initializeUI()
 
         cancelBtn?.setOnClickListener {
-            //TODO: HERE WE SHOULD EXIT OUT
             finish()
         }
 
         saveBtn?.setOnClickListener {
-            //TODO: HERE WE SHOULD CREATE THE WORKS OR EDIT THE WORKS
             val id = mDatabaseWorks!!.push().key
 
-            //defunct
-            //mDatabaseTitles!!.child(workid!!).child("title").setValue(intent.getStringExtra("TITLE"))
-
             mDatabaseWorks!!.child(workid!!).child("content").setValue(worksContent!!.text.toString().trim() )
-            //mDatabaseWorks!!.child(workid!!).child("title").setValue(intent.getStringExtra("TITLE"))
-
 
             if (!intent.getStringExtra("WORKS").contains(workid.toString().trim()))
-                mDatabaseUsers!!.child("Works").setValue(intent.getStringExtra("WORKS")+", "+workid.toString().trim() )
-            //mDatabaseWorks!!.child(workid!!).child("title").setValue(intent.getStringExtra("TITLE"))
-
-            //setting proper title
+                if(intent.getStringExtra("WORKS")!=""){
+                    mDatabaseUsers!!.child("Works").setValue(intent.getStringExtra("WORKS")+", "+workid.toString().trim() )
+                }else{
+                    mDatabaseUsers!!.child("Works").setValue(workid.toString().trim())
+                }
 
             mDatabaseTitles!!.child(workid!!).child("title").setValue(worksTitle!!.text.toString().trim())
             mDatabaseWorks!!.child(workid!!).child("title").setValue(worksTitle!!.text.toString().trim())
 
+            Toast.makeText(applicationContext, "Saving "+worksTitle!!.text.toString().trim(), Toast.LENGTH_SHORT).show()
 
-            Log.i("HELP", "title: " + worksTitle!!.text.toString())
 
             true
         }
@@ -93,13 +88,5 @@ class WorksActivity: AppCompatActivity()
                     }
                 }
             )
-        }
-
-
-
-        companion object {
-            val CHALLENGE_NAME = "com.example.tesla.myhomelibrary.authorname"
-            val AUTHOR_ID = "com.example.tesla.myhomelibrary.authorid"
-            val UserID = "com.example.tesla.myhomelibrary.UID"
         }
 }

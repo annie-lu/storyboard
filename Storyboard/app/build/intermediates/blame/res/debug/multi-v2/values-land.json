@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\annac\\Desktop\\storyboard\\Storyboard\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-land\\values-land.xml",
+            "outputFile": "/Users/annielu/Documents/GitHub/storyboard/Storyboard/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\annac\\.gradle\\caches\\transforms-2\\files-2.1\\865a0d62a5a62b00dead815227c535dc\\material-1.0.0\\res\\values-land\\values-land.xml",
+                    "source": "/Users/annielu/.gradle/caches/transforms-2/files-2.1/865a0d62a5a62b00dead815227c535dc/material-1.0.0/res/values-land/values-land.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\annac\\.gradle\\caches\\transforms-2\\files-2.1\\00953f22e14bdfc132f4f3bfc7bebd91\\appcompat-1.0.2\\res\\values-land\\values-land.xml",
+                    "source": "/Users/annielu/.gradle/caches/transforms-2/files-2.1/00953f22e14bdfc132f4f3bfc7bebd91/appcompat-1.0.2/res/values-land/values-land.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",

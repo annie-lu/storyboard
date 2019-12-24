@@ -19,7 +19,6 @@ class WorksDashActivity: AppCompatActivity() {
     private var mDatabaseTitles: DatabaseReference? = null
     private var mDatabaseUsers: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
-    private var name: String? = null
     private var works: String? = null
     private var userWorks: MutableList<String>? = null
     private var titles: MutableList<String>? = null
@@ -33,7 +32,6 @@ class WorksDashActivity: AppCompatActivity() {
 
 
         if(works==null){
-            Log.e("ahhh","works not currently working")
             works = intent.getStringExtra("WORKS")
         }
         userWorks = works!!.split(", ") as MutableList<String>
@@ -60,8 +58,11 @@ class WorksDashActivity: AppCompatActivity() {
         }
 
         editBtn?.setOnClickListener {
+            if(works==""){
+                Toast.makeText(applicationContext, "You have no works to edit", Toast.LENGTH_SHORT).show()
+            }else{
             showEditDialog()
-            true
+            true}
         }
     }
 
@@ -87,20 +88,18 @@ class WorksDashActivity: AppCompatActivity() {
         val buttonDelete = dialogView.findViewById<View>(R.id.buttonDelete) as Button
 
         dialogBuilder.setTitle("Select Work to Edit/Delete")
-        // Log.e("help",mDatabaseUsers!!.child(authorId).child("Name").toString())
         val b = dialogBuilder.create()
         b.show()
 
 
         buttonUpdate.setOnClickListener {
             val country = spinnerCountry.selectedItem.toString()
-                //TODO: HERE WE SHOULD PUT THE WORKS ACTIVITY INTENT????
-
             val selected: String
             selected = spinnerCountry!!.selectedItem.toString()
-            Toast.makeText(applicationContext, selected, Toast.LENGTH_LONG).show()
                 val WorksActivityIntent = Intent(applicationContext, WorksActivity::class.java)
-                WorksActivityIntent.putExtra("TITLE",selected)
+                Toast.makeText(applicationContext, "Editing "+selected, Toast.LENGTH_SHORT).show()
+
+            WorksActivityIntent.putExtra("TITLE",selected)
                 WorksActivityIntent.putExtra("CURRUSER",intent.getStringExtra("CURRUSER"))
                 WorksActivityIntent.putExtra("WORKS",works)
                 WorksActivityIntent.putExtra("WORKID", userWorks!![titles!!.indexOf(selected)])
@@ -115,7 +114,7 @@ class WorksDashActivity: AppCompatActivity() {
             //TODO: HERE WE SHOULD DELETE THE SELECTED WORK
             val selected = spinnerCountry!!.selectedItem.toString()
             var workId = userWorks!![titles!!.indexOf(selected)]
-            Log.i("HELP", "workid: " + workId)
+            Toast.makeText(applicationContext, "Deleting "+selected, Toast.LENGTH_SHORT).show()
             mDatabaseTitles?.ref?.child(workId)?.removeValue()
             mDatabase?.reference?.child("Works")?.child(workId)?.removeValue()
             userWorks!!.remove(workId)
@@ -145,12 +144,12 @@ class WorksDashActivity: AppCompatActivity() {
             val titleName = editTextName.text.toString().trim { it <= ' ' }
             if (!TextUtils.isEmpty(titleName)) {
                 val WorksActivityIntent = Intent(applicationContext, WorksActivity::class.java)
+                Toast.makeText(applicationContext, "Creating "+titleName, Toast.LENGTH_SHORT).show()
                 WorksActivityIntent.putExtra("TITLE",titleName)
                 WorksActivityIntent.putExtra("CURRUSER",intent.getStringExtra("CURRUSER"))
                 WorksActivityIntent.putExtra("WORKS",works)
                 WorksActivityIntent.putExtra("WORKID", mDatabase!!.getReference("Works").push().key)
                 startActivity(WorksActivityIntent)
-                //TODO: HERE WE SHOULD PUT THE WORKS ACTIVITY INTENT????
                 b.dismiss()
             }
         }

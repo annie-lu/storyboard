@@ -28,13 +28,12 @@ class ChallengeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_challenge)
 
         initializeUI()
-
-
-
-
     }
 
-    private fun initializeUI() {
+    override fun onResume() {
+        super.onResume()
+    }
+        private fun initializeUI() {
 
         worksView = findViewById(R.id.worksView)
 
@@ -50,34 +49,19 @@ class ChallengeActivity : AppCompatActivity() {
 
         worksView?.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, view, i, l ->
-                Log.i("trying this out", adapterView.workTitle.text.toString())
-                Log.i("trying this out", view.toString())
-                Log.i("trying this out", l.toString())
 
                 val submitIntent = Intent(applicationContext, SubmitChallengeActivity::class.java)
-                submitIntent.putExtra("CHALLENGE_NAME" ,adapterView.workTitle.text.toString())
+                submitIntent.putExtra("CHALLENGE_NAME" ,view.workTitle.text.toString())
                 submitIntent.putExtra(UserID ,intent.getStringExtra(UserID))
                 submitIntent.putExtra("WORKS" ,intent.getStringExtra("WORKS"))
 
-                //intent.putExtra(USER_ID, FirebaseUser.getCurrentUser())
-                //intent.putExtra(AUTHOR_ID, author.authorId)
-                //intent.putExtra(AUTHOR_NAME, author.authorName)
-                startActivity(submitIntent)
-            }
+                startActivity(submitIntent)}
 
-/*
-        if(findViewById<View>(R.id.spinnerCountry) == null) {
-            Log.i("help","this is null")
-        }else{
-            Log.i("help","this is NOT null")
-        }
-        spinnerCountry = findViewById<View>(R.id.spinnerCountry) as Spinner
-  */
+
     }
 
     companion object {
         val UserID = "com.example.tesla.myhomelibrary.UID"
-        val AUTHOR_ID = "com.example.tesla.myhomelibrary.authorid"
     }
 
 

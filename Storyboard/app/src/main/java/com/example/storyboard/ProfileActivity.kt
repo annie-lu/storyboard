@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.content.Intent
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.worksview_item.view.*
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -48,12 +50,6 @@ class ProfileActivity : AppCompatActivity() {
             worksPassed = it
         }
 
-        //nameTV?.inputType = InputType.TYPE_NULL
-        //nameTV?.isEnabled = false
-        //nameTV?.isFocusable = false
-        //nameTV?.isClickable = true
-
-        // TODO - MAKE IT SO ONLY YOU CAN EDIT OWN PROFILE, GET USERID FROM EXTRA
         editButton?.setOnClickListener {
             editing = !editing
 
@@ -71,23 +67,6 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-
-
-//        //NOT WORKING
-//        nameTV?.setOnClickListener {
-//            Toast.makeText(this, "Long click detected", Toast.LENGTH_SHORT).show()
-//            nameTV?.isEnabled = true
-//            Log.i("HELP", "name clicked")
-//            true
-//        }
-//
-//        bioTV?.setOnLongClickListener {
-//            Toast.makeText(this, "Long click detected", Toast.LENGTH_SHORT).show()
-//            bioTV?.isEnabled = true
-//            Log.i("HELP", "bio clicked")
-//
-//            true
-//        }
     }
 
     override fun onStart() {
@@ -137,6 +116,20 @@ class ProfileActivity : AppCompatActivity() {
                     )
 
                     worksView?.adapter = adapter
+
+
+                    worksView?.onItemClickListener =
+                        AdapterView.OnItemClickListener { adapterView, view, i, l ->
+                            val WorksActivityIntent = Intent(applicationContext, WorksActivity::class.java)
+                            val selected = view.workTitle.text.toString()
+                            Toast.makeText(applicationContext, "Editing "+selected, Toast.LENGTH_SHORT).show()
+
+                            WorksActivityIntent.putExtra("TITLE",selected)
+                            WorksActivityIntent.putExtra("CURRUSER",intent.getStringExtra("CURRUSER"))
+                            WorksActivityIntent.putExtra("WORKS",worksPassed)
+                            WorksActivityIntent.putExtra("WORKID", rawWorksList!![titles!!.indexOf(selected)])
+                            startActivity(WorksActivityIntent)
+                        }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -145,47 +138,14 @@ class ProfileActivity : AppCompatActivity() {
             })
         }
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//
-//        Log.i("HELP", "entered onresume")
-//
-//
-//
-//        mDatabaseUsers?.child(profUID)?.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//                Log.i("HELP", "name from firebase: " + dataSnapshot.child("Name").value.toString())
-//
-//                nameTV?.setText(dataSnapshot.child("Name").value.toString())
-//                bioTV?.setText(dataSnapshot.child("Bio").value.toString())
-//
-//                // ...
-//                //});
-//                //nameTV?.text = dataSnapshot.child(profUID).child("Name").getValue(String.class)
-//
-////                if (dataSnapshot.child(profUID).hasChild("Name")) {
-////
-////                }
-//
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                Log.i("HELP", "error: " + databaseError.message)
-//
-//            }
-//        })
-//    }
-
-
     private fun initializeUI() {
         nameTV = findViewById<EditText>(R.id.name)
         bioTV = findViewById<EditText>(R.id.bio)
         editButton = findViewById<ImageButton>(R.id.editButton)
         worksView = findViewById(R.id.worksView)
 
-        titles = ArrayList()
+
+            titles = ArrayList()
 
 
 

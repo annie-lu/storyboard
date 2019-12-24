@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\annac\\Desktop\\storyboard\\Storyboard\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ms\\values-ms.xml",
+            "outputFile": "/Users/annielu/Documents/GitHub/storyboard/Storyboard/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ms/values-ms.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\annac\\.gradle\\caches\\transforms-2\\files-2.1\\4a9d915bc2214ea3651fe2f1e3914912\\core-1.0.2\\res\\values-ms\\values-ms.xml",
+                    "source": "/Users/annielu/.gradle/caches/transforms-2/files-2.1/4a9d915bc2214ea3651fe2f1e3914912/core-1.0.2/res/values-ms/values-ms.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\annac\\.gradle\\caches\\transforms-2\\files-2.1\\00953f22e14bdfc132f4f3bfc7bebd91\\appcompat-1.0.2\\res\\values-ms\\values-ms.xml",
+                    "source": "/Users/annielu/.gradle/caches/transforms-2/files-2.1/00953f22e14bdfc132f4f3bfc7bebd91/appcompat-1.0.2/res/values-ms/values-ms.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\annac\\.gradle\\caches\\transforms-2\\files-2.1\\3b92f7cbbf1d39dae511ca2d9b965dd5\\play-services-base-17.1.0\\res\\values-ms\\values.xml",
+                    "source": "/Users/annielu/.gradle/caches/transforms-2/files-2.1/3b92f7cbbf1d39dae511ca2d9b965dd5/play-services-base-17.1.0/res/values-ms/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -55,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\annac\\.gradle\\caches\\transforms-2\\files-2.1\\08c68da82f7db4c46236abd8b264c8d4\\jetified-play-services-basement-17.0.0\\res\\values-ms\\values.xml",
+                    "source": "/Users/annielu/.gradle/caches/transforms-2/files-2.1/24ed0adfc3ca86fc4f17d5aba5cd0f11/jetified-play-services-basement-17.0.0/res/values-ms/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
