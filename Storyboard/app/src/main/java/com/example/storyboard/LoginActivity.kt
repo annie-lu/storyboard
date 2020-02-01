@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Please enter password!", Toast.LENGTH_LONG).show()
             return
         }
-        Log.e(UserID, mAuth!!.getCurrentUser()!!.getUid())
+//        Log.e(UserID, mAuth!!.getCurrentUser()!!.getUid())
         mAuth!!.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 progressBar!!.visibility = View.GONE
